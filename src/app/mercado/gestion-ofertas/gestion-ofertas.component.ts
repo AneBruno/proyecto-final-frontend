@@ -69,6 +69,7 @@ export class GestionOfertasComponent extends ListadoComponent implements OnInit 
         this.dataSource.fixedFilters.producto_id =[this.posicion.producto_id];
         this.dataSource.fixedFilters.condicion_pago_id = [this.posicion.forma_pago_id];
         this.dataSource.fixedFilters.puerto_id = [this.posicion.puerto_id];
+        this.dataSource.fixedFilters.moneda = [this.posicion.moneda];
         //@ts-ignore
         window['dataSource'] = this.dataSource;
 

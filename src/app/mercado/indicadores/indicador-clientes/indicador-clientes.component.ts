@@ -29,8 +29,8 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
   public posiciones           : Array<any> = [];
   public cantTotal            : number = 0;
   public data_negocios        : { x: Date, y: number, z: string }[] = [];
-  public data_sin_cerrar      : { x: Date, y: number, z: string }[] = [];
-  public data_eliminada       : { x: Date, y: number, z: string }[] = [];
+  /*public data_sin_cerrar      : { x: Date, y: number, z: string }[] = [];
+  public data_eliminada       : { x: Date, y: number, z: string }[] = [];*/
   public data_montos_usd      : { x: number, y: string}[] = [];
   public data_montos_comis_usd : { x: number, y: string }[] = [];
   public data_montos_ars      : { x: number, y: string}[] = [];
@@ -39,7 +39,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
   public empresas_compradoras : Array<any> = [];
 
   //Filtros
-  public filtroPeriodo?       : string= '%Y-%m';
+  public filtroPeriodo?       : string= '%Y';
   public filtroProducto       : string | null =  '';
   public filtroPuerto         : string | null  = '';
   public filtroFormaPago      : string | null  = '';
@@ -57,8 +57,12 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
     this.dataSource.uri = '/indicadores/mercado/clientes';
     this.dataSource.afterFetch.subscribe((data) => {
       this.data_negocios.length=0;
-      this.data_sin_cerrar.length=0;
-      this.data_eliminada.length=0;
+      this.data_montos_usd.length=0;
+      this.data_montos_ars.length=0;
+      this.data_montos_comis_ars.length=0;
+      this.data_montos_comis_usd.length=0;
+      /*this.data_sin_cerrar.length=0;
+      this.data_eliminada.length=0;*/
       console.log('afterFetch this.dataSource.currentData', this.dataSource.currentData);
       if(this.filtroPeriodo ==='%Y-%m-%d'){
         this.dataSource.currentData.forEach((elemento)=>{
@@ -69,11 +73,11 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
           const dia = parseInt(diaStr, 10);
           const fecha = new Date(anio, mes - 1, dia);
           this.data_negocios.push({ x: fecha, y: +elemento.Cerrada, z: elemento.razon_social});
-          this.data_sin_cerrar.push({ x: fecha, y: +elemento.Activa, z: elemento.razon_social});
-          this.data_eliminada.push({ x: fecha, y: +elemento.Eliminada, z: elemento.razon_social});
+          /*this.data_sin_cerrar.push({ x: fecha, y: +elemento.Activa, z: elemento.razon_social});
+          this.data_eliminada.push({ x: fecha, y: +elemento.Eliminada, z: elemento.razon_social});*/
         })
         this.dibujarGraficoDiario(); 
-        this.dibujarGraficoDiarioSinCerrar();
+        //this.dibujarGraficoDiarioSinCerrar();
         //this.dibujarGraficoDiarioEliminadas();
       }
       if(this.filtroPeriodo ==='%Y-%m'){
@@ -83,28 +87,29 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
           const anio = parseInt(anioStr, 10);
           const mes = parseInt(mesStr, 10);
           const fecha = new Date(anio, mes - 1);
-          this.data_negocios.push({ x: fecha, y: +elemento.Cerrada, z: elemento.razon_social }); 
-          this.data_sin_cerrar.push({ x: fecha, y: +elemento.Activa, z: elemento.razon_social }); 
-          this.data_eliminada.push({ x: fecha, y: +elemento.Eliminada, z: elemento.razon_social});
+          this.data_negocios.push({ x: fecha, y: +elemento.Total, z: elemento.razon_social }); 
+          /*this.data_sin_cerrar.push({ x: fecha, y: +elemento.Activa, z: elemento.razon_social }); 
+          this.data_eliminada.push({ x: fecha, y: +elemento.Eliminada, z: elemento.razon_social});*/
           
         })
         this.dibujarGraficoMensual(); 
-        this.dibujarGraficoMensualSinCerrar();
+        //this.dibujarGraficoMensualSinCerrar();
         //this.dibujarGraficoMensualEliminadas();
       }
       if(this.filtroPeriodo ==='%Y'){
         this.dataSource.currentData.forEach((elemento)=>{
           const periodo = elemento.periodo;
-          this.data_negocios.push({ x: new Date(periodo, 0), y: +elemento.Cerrada, z: elemento.razon_social });  
-          this.data_sin_cerrar.push({ x: new Date(periodo, 0), y: +elemento.Activa, z: elemento.razon_social }); 
-          this.data_eliminada.push({ x: new Date(periodo, 0), y: +elemento.Eliminada, z: elemento.razon_social });
+          //Lleno con la cant total porque es la cant de negocios cerrados ( 'Cerradas' solo trae cant de pos cerradas)
+          this.data_negocios.push({ x: new Date(periodo, 0), y: +elemento.Total, z: elemento.razon_social });  
+          //this.data_sin_cerrar.push({ x: new Date(periodo, 0), y: +elemento.Activa, z: elemento.razon_social }); 
+          //this.data_eliminada.push({ x: new Date(periodo, 0), y: +elemento.Eliminada, z: elemento.razon_social });
           this.data_montos_usd.push({  x: +elemento.Monto_USD, y: elemento.razon_social}); 
           this.data_montos_comis_usd.push({ x: +elemento.Monto_comis_USD, y: elemento.razon_social}); 
           this.data_montos_ars.push({  x: +elemento.Monto_ARS, y: elemento.razon_social}); 
           this.data_montos_comis_ars.push({ x: +elemento.Monto_comis_ARS, y: elemento.razon_social}); 
         })
         this.dibujarGraficoAnual(); 
-        this.dibujarGraficoAnualSinCerrar();
+        //this.dibujarGraficoAnualSinCerrar();
         console.log("this.data_montos_usd", this.data_montos_usd);
         console.log("this.data_montos_comis_usd", this.data_montos_comis_usd);
         console.log("this.data_montos_ars", this.data_montos_ars);
@@ -132,17 +137,17 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
     if(this.dataSource.currentData.length > 0){
       if(this.filtroPeriodo ==='%Y-%m%-%d' ){
         this.dibujarGraficoDiario(); 
-        this.dibujarGraficoDiarioSinCerrar();
+        //this.dibujarGraficoDiarioSinCerrar();
         //this.dibujarGraficoDiarioEliminadas();
       }
       if(this.filtroPeriodo ==='%Y-%m' ){
         this.dibujarGraficoMensual();
-        this.dibujarGraficoMensualSinCerrar();
+        //this.dibujarGraficoMensualSinCerrar();
         //this.dibujarGraficoMensualEliminadas();
       }
       if(this.filtroPeriodo ==='%Y' ){
         this.dibujarGraficoAnual();
-        this.dibujarGraficoAnualSinCerrar();
+        //this.dibujarGraficoAnualSinCerrar();
         //this.dibujarGraficoAnualEliminadas();
         this.dibujarBarras();
         this.dibujarBarrasComisiones();
@@ -156,13 +161,13 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
     this.addColumn('periodo',    'Periodo',    '80px');
     this.addColumn('razon_social',    'Razón social',    '100px');
     this.addColumn('Negocios_cerrados',    'Negocios cerrados',    '40px');
-    this.addColumn('Monto_USD','Comprado (USD)', '90px').renderFn(row => 'USD '+row.Monto_USD ).setAlign('center');
-    this.addColumn('Monto_comis_USD','Comisiones (USD)', '90px').renderFn(row => 'USD '+row.Monto_comis_USD).setAlign('center');
-    this.addColumn('Monto_ARS','Comprado (ARS)', '80px').renderFn(row => 'ARS '+row.Monto_ARS ).setAlign('center');
-    this.addColumn('Monto_comis_ARS','Comisiones (ARS)', '110px').renderFn(row => 'ARS '+row.Monto_comis_ARS).setAlign('center');
-    this.addColumn('Activa',    'Sin cerrar',    '40px');
+    this.addColumn('Monto_USD','Comprado (USD)', '90px').renderFn(row => row.Monto_USD? 'USD '+(row.Monto_USD as number).toFixed(2): '-').setAlign('center');
+    this.addColumn('Monto_comis_USD','Comisiones (USD)', '90px').renderFn(row => row.Monto_comis_USD? 'USD '+ (row.Monto_comis_USD as number).toFixed(2) : '-').setAlign('center');
+    this.addColumn('Monto_ARS','Comprado (ARS)', '80px').renderFn(row => row.Monto_ARS? 'ARS '+(row.Monto_ARS as number).toFixed(2) : '-').setAlign('center');
+    this.addColumn('Monto_comis_ARS','Comisiones (ARS)', '110px').renderFn(row => row.Monto_comis_ARS? 'ARS '+row.Monto_comis_ARS : '-').setAlign('center');
+    //this.addColumn('Activa',    'Sin cerrar',    '40px');
     //this.addColumn('Eliminada',    'Eliminadas',    '40px');
-    this.addColumn('Total',    'Total de Posiciones',    '40px');
+    //this.addColumn('Total',    'Total de Posiciones',    '40px');
    
 
   }
@@ -445,7 +450,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
     }
   }
 
-  public dibujarGraficoAnualSinCerrar() {
+  /*public dibujarGraficoAnualSinCerrar() {
     let chart: any;
     this.chartOptions2 = {
       animationEnabled: true,
@@ -507,9 +512,9 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
         this.chartOptions2.data.push(seriesPorRazonSocial[razonSocial]);
       }
     }
-  }
+  }*/
 
-  public dibujarGraficoMensualSinCerrar(){
+  /*public dibujarGraficoMensualSinCerrar(){
     let chart: any ;
     this.chartOptions2 = {
       animationEnabled: true,
@@ -570,9 +575,9 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
         this.chartOptions2.data.push(seriesPorRazonSocial[razonSocial]);
       }
     }
-  }
+  }*/
 
-  public dibujarGraficoDiarioSinCerrar(){
+  /*public dibujarGraficoDiarioSinCerrar(){
     let chart: any ;
     this.chartOptions2 = {
       animationEnabled: true,
@@ -631,7 +636,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
         this.chartOptions2.data.push(seriesPorRazonSocial[razonSocial]);
       }
     }
-  }
+  }*/
 
   public dibujarBarras (){
     let chart: any;
