@@ -26,6 +26,7 @@ export class MercadoOrdenesFormComponent extends FormBaseLocalizacionComponent i
 
 
     public productos                : any[] = [];
+    public cosechas?               : any[];
     public condiciones_pago$?       : Observable<any[]>;
     public empresas                 : any[] = [];
     public puertos                  : any[] = [];
@@ -57,13 +58,13 @@ export class MercadoOrdenesFormComponent extends FormBaseLocalizacionComponent i
         this.loadRelatedData();
     }
 
-    public loadRelatedData() {
+    public async loadRelatedData() {
         this.buscarProductos();
         this.buscarEmpresas();
         this.condiciones_pago$ = this.apiService.getAllData('/mercado/condiciones-pago').pipe(
             map(condiciones => condiciones.filter((condicion: any) => condicion.habilitado))
         );
-
+        this.cosechas         = await this.apiService.getAllData('/mercado/cosechas', {ordenes: {descripcion:'DESC'}, filtros: {habilitado: 1}}).toPromise();
         this.fetchPuertos();
 
         /*if (this.consulta) {
@@ -87,6 +88,7 @@ export class MercadoOrdenesFormComponent extends FormBaseLocalizacionComponent i
             this.posicion = await this.apiService.getData(`/mercado/posiciones/${this.id}`).toPromise();
             //this.completarFormConPosicion();
         }
+        this.obtenerYCompletar(this.id, {with_relation : 'cosecha'});
     }
 
     private loadData() {
@@ -110,6 +112,7 @@ export class MercadoOrdenesFormComponent extends FormBaseLocalizacionComponent i
         this.form = this.fb.group({
             id: new FormControl({ value: '', disabled: true }),
             producto_id: new FormControl({ value: '', disabled: false }),
+            cosecha_id           : new FormControl({ value: '', disabled: false }),
             producto_nombre: new FormControl({ value: '', disabled: false }),
             empresa_id: new FormControl({ value: '', disabled: false }),
             puerto_id: new FormControl({ value: '', disabled: false }),
@@ -138,14 +141,26 @@ export class MercadoOrdenesFormComponent extends FormBaseLocalizacionComponent i
 
     protected completarCampos(data: any) {
         super.completarCampos(data);
+        this.form?.patchValue({ 'producto_nombre': data.producto.nombre });
         this.form?.patchValue({ 'empresa_razon_social': data.empresa.razon_social });
-
+        var cosechaDeshabilitada = data.cosecha.habilitado ? false : true;
+        if (this.consulta && cosechaDeshabilitada) {
+            this.cosechas?.unshift(data.cosecha);
+            //@ts-ignore
+            this.form?.get('cosecha_id')?.setValue(this.cosechas[0].id);
+        }
+        if (!this.consulta && cosechaDeshabilitada) {
+            this.form?.get('cosecha_id')?.setValue(null);
+        } else {
+            this.form?.get('cosecha_id')?.setValue(data.cosecha.id);
+        }
+       
         if (/*data.estado_id == 4 ||*/ data.estado_id == 5 || data.estado_id == 3) {
             this.form?.patchValue({ 'estado_id': "" });
         } else {
             this.form?.patchValue({ 'estado_id': data.estado_id });
         }
-        this.form?.patchValue({ 'producto_nombre': data.producto.nombre });
+        
         this.form?.patchValue({ 'comercial': (data.usuario_carga.nombreCompleto) });
 
         //Lógica para completar campos de destino:

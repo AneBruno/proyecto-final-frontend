@@ -28,8 +28,9 @@ export class MercadoOrdenesListarComponent extends ListadoComponent implements O
         read: MatInput
     }) filtroFechaHasta?: MatInput;
 
-    public fechaDesde?           : Date | null;
-    public fechaHasta?           : Date | null;
+    public  cosechas            : any[] = [];
+    public fechaDesde?          : Date | null;
+    public fechaHasta?          : Date | null;
     public formasPago           : Array<any> = [];
     public comerciales          : Array<any> = [];
     public puertos              : Array<any> = [];
@@ -60,6 +61,8 @@ export class MercadoOrdenesListarComponent extends ListadoComponent implements O
     public filtroPuertos!   : Array<any>;
     public filtroEmpresa!    : Array<any>;
     public filtroFormaPago!    : Array<any>;
+    public filtroEstado        : Array<any> = ['1', '3'];
+    public filtroCosecha      : Array<any> = [];
 
 
     public constructor(
@@ -77,17 +80,16 @@ export class MercadoOrdenesListarComponent extends ListadoComponent implements O
     public async ngOnInit(): Promise<void> {
         registerLocaleData( es );
         this.dataSource.autoStart = false;
-
         this.currentUser = this.userService.getUser();
 
         this.comerciales          = await this.apiService.getData('/usuarios', {ordenes: {descripcion:'DESC'}}).toPromise();
-
+        this.cosechas   = await this.apiService.getAllData('/mercado/cosechas', {ordenes: {descripcion:'DESC'}}).toPromise();
         await this.loadRelatedData();
 
         this.estados = await this.apiService.getData('/mercado/ordenes/estados').toPromise();
         this.dataSource.uri         = '/mercado/ordenes';
         this.dataSource.queryParams = {
-            with_relation : 'puerto,producto,empresa,usuarioCarga,condicionPago',
+            with_relation : 'puerto,producto,empresa,usuarioCarga,condicionPago,cosecha',
             ordenes: {
                 "id": "DESC"
             }
@@ -100,8 +102,8 @@ export class MercadoOrdenesListarComponent extends ListadoComponent implements O
             this.clearColumns();
             this.addColumn('created_at',    'Fecha',     '50px').renderFn(row => this.formatearFecha(row.created_at));
             this.addColumn('vendedor',      'Empresa vendedora',  '180px').renderFn(row => this.empresaHelper.obtenerNombreEmpresa(row.empresa)).setAsCustom();
+            this.addColumn('cosecha',      'Cosecha',       '120px').renderFn(row => row.cosecha.descripcion);
             this.addColumn('producto',      'Producto',       '120px').renderFn(row => row.producto.nombre);
-            //this.addColumn('toneladas', 'Toneladas', '80px').renderFn(row => row.volumen? row.volumen : '0');
             this.addColumn('toneladas', 'Toneladas', '80px').renderFn(row =>  {
             
                 const toneladas = parseFloat(row.volumen); // Convierte el valor a número decimal
@@ -187,6 +189,9 @@ export class MercadoOrdenesListarComponent extends ListadoComponent implements O
         if (this.fechaHasta) {
             this.dataSource.filtros.fechaHasta = moment(this.fechaHasta).format('YYYY-MM-DD');
         }
+        if (this.filtroEstado){
+            this.dataSource.filtros.estado_id = this.filtroEstado;
+        }
     }
 
     public onClearFilters() {
@@ -197,7 +202,10 @@ export class MercadoOrdenesListarComponent extends ListadoComponent implements O
         this.filtroPuertos   = [];
         this.filtroEmpresa   = [];
         this.filtroFormaPago = [];
+        this.filtroCosecha   = [];
+        this.filtroEstado       = ['1', '3'];
         //this.filtroComercial = null;
+        this.actualizarDatos();
     }
 
 

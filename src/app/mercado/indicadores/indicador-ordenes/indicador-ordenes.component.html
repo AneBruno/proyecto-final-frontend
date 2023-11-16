@@ -22,6 +22,13 @@
             </mat-select>
         </mat-form-field>
 
+        <!--<mat-form-field appearance="legacy">
+            <mat-label>Cosecha</mat-label>
+                <mat-select [(ngModel)]="filtroCosecha" (selectionChange)="onFiltroProductoChange($event)">
+                    <mat-option *ngFor="let row of cosechas" [value]="row.id">{{row.nombre}}</mat-option>
+                </mat-select>
+        </mat-form-field>-->
+
         <mat-form-field appearance="legacy">
             <mat-label>Producto</mat-label>
                 <mat-select [(ngModel)]="filtroProducto" (selectionChange)="onFiltroProductoChange($event)">

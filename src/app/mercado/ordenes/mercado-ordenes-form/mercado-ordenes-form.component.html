@@ -23,7 +23,6 @@
             </mat-autocomplete>
             <mat-error *ngIf="error('empresa_id')">{{error('empresa_id')}}</mat-error>
         </mat-form-field>
-
     </div>
         
     <div fxLayout.lg="row" fxLayout.xs="column" fxLayoutGap="10px">
@@ -34,6 +33,17 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill" fxFlex.lg="50" fxFlex.xs="100">
+            <mat-label>Cosecha</mat-label>
+            <mat-select formControlName="cosecha_id" required>
+                <mat-option [value]="null">Seleccione...</mat-option>
+                <mat-option *ngFor="let row of cosechas" [value]="row.id">{{row.descripcion}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="error('cosecha_id')">{{error('cosecha_id')}}</mat-error>
+        </mat-form-field> 
+    </div>
+
+    <div fxLayout.lg="row" fxLayout.xs="column" fxLayoutGap="10px">
+        <mat-form-field appearance="fill" fxFlex.lg="50" fxFlex.xs="100">
             <mat-label>Forma de pago</mat-label>
             <mat-select formControlName="condicion_pago_id" required>
                 <mat-option *ngFor="let row of condiciones_pago$ | async" [value]="row.id">
@@ -42,9 +52,7 @@
             </mat-select>
             <mat-error *ngIf="error('condicion_pago_id')">{{error('condicion_pago_id')}}</mat-error>
         </mat-form-field>
-    </div>
 
-    <div fxLayout.lg="row" fxLayout.xs="column" fxLayoutGap="10px">
         <mat-form-field appearance="fill" fxFlex.lg="50" fxFlex.xs="100">
             <mat-label>Moneda</mat-label>
             <mat-select formControlName="moneda" required>
@@ -53,17 +61,16 @@
             </mat-select>
             <mat-error *ngIf="error('moneda')">{{error('moneda')}}</mat-error>
         </mat-form-field>
+    </div>
 
+    <!--<div *ngIf="opcion_destino==='exportacion'">-->
+    <div fxLayout.lg="row" fxLayout.xs="column" fxLayoutGap="10px">
         <mat-form-field appearance="fill" fxFlex.lg="50" fxFlex.xs="100">
             <mat-label>Precio</mat-label>
             <input formControlName="precio"  matInput required/>
             <mat-error *ngIf="error('precio')">{{error('precio')}}</mat-error>
         </mat-form-field>
-    </div>
 
-
-    <!--<div *ngIf="opcion_destino==='exportacion'">-->
-    <div fxLayout.lg="row" fxLayout.xs="column" fxLayoutGap="10px">
         <mat-form-field appearance="fill" fxFlex.lg="50" fxFlex.xs="100">
             <mat-label>Puerto de destino</mat-label>
             <mat-select formControlName="puerto_id" required>
@@ -71,16 +78,15 @@
             </mat-select>
             <mat-error *ngIf="error('puerto_id')">{{error('puerto_id')}}</mat-error>
         </mat-form-field>
-        
         <!--</div>-->
-
+    </div>
+    <div>
         <mat-form-field appearance="fill" fxFlex.lg="50" fxFlex.xs="100">
             <mat-label>Observaciones</mat-label>
             <input formControlName="observaciones" matInput />
             <mat-error *ngIf="error('observaciones')">{{error('observaciones')}}</mat-error>
         </mat-form-field>
     </div>
-
     <div class="loading-overlay" *ngIf="isLoading">
         <div class="spinner"></div>
     </div>

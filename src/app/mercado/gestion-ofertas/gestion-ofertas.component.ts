@@ -63,13 +63,14 @@ export class GestionOfertasComponent extends ListadoComponent implements OnInit 
 
         this.dataSource.uri         = '/mercado/ordenes';
         this.dataSource.queryParams = {
-            with_relation : 'puerto,producto,empresa,estado,usuarioCarga,condicionPago'
+            with_relation : 'puerto,producto,empresa,estado,usuarioCarga,condicionPago,cosecha'
         };
         this.dataSource.fixedFilters.estados = [1];
         this.dataSource.fixedFilters.producto_id =[this.posicion.producto_id];
         this.dataSource.fixedFilters.condicion_pago_id = [this.posicion.forma_pago_id];
         this.dataSource.fixedFilters.puerto_id = [this.posicion.puerto_id];
         this.dataSource.fixedFilters.moneda = [this.posicion.moneda];
+        this.dataSource.fixedFilters.cosecha_id = [this.posicion.cosecha_id];
         //@ts-ignore
         window['dataSource'] = this.dataSource;
 
@@ -81,6 +82,7 @@ export class GestionOfertasComponent extends ListadoComponent implements OnInit 
         ]).subscribe(result => {
             this.clearColumns();
             this.addColumn('vendedor',    'Vendedora',          '150px').renderFn(row => row.empresa.razon_social);
+            this.addColumn('cosecha',    'Cosecha',          '120px').renderFn(row => row.cosecha.descripcion);
             this.addColumn('producto',    'Producto',          '120px').renderFn(row => row.producto.nombre);
             this.addColumn('tonelada',    'Toneladas',     '100px').renderFn(row => row.volumen).setAsNumber();
             this.addColumn('destino',     'Puerto de destino',      '150px').renderFn(row => this.calculaDestinoOfertas(row));

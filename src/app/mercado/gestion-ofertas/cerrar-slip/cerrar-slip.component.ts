@@ -119,7 +119,7 @@ export class CerrarSlipComponent extends FormBaseComponent implements OnInit {
 
     private async completarFormConPosicion(){
        
-        const relations = 'empresa,producto,puerto,condicionPago,usuarioCarga';
+        const relations = 'empresa,producto,puerto,condicionPago,usuarioCarga,cosecha';
         this.orden = await this.apiService.getData('/mercado/ordenes/' + this.orden_id, { with_relation: relations }).toPromise();
         console.log('this.orden',this.orden);
         this.usuarios = await this.apiService.getData('/usuarios').toPromise();
@@ -141,6 +141,7 @@ export class CerrarSlipComponent extends FormBaseComponent implements OnInit {
         this.form?.get('empresa_orden')?.setValue(this.orden.empresa.razon_social);
         this.form?.get('comision_vendedor')?.setValue(this.orden.empresa.comision?this.orden.empresa.comision+'%': 0+'%');
         this.form?.get('comision_vendedor_cierre')?.setValue(this.orden.empresa.comision?this.orden.empresa.comision: 0);
+        this.form?.get('cosecha_orden')?.setValue(this.orden.cosecha.descripcion);
         this.form?.get('volumen')?.setValue(this.orden.volumen);
         this.form?.get('producto_orden')?.setValue(this.orden.producto.nombre);
         this.form?.get('observaciones_orden')?.setValue(this.orden.observaciones? this.orden.observaciones : '-');

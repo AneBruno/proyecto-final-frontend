@@ -35,6 +35,13 @@
               <mat-option *ngFor="let row of empresas" [value]="row.id">{{row.razon_social}}</mat-option>
             </mat-select>
           </mat-form-field>
+        
+        <mat-form-field appearance="legacy" >
+			<mat-label>Cosecha</mat-label>
+			<mat-select multiple [(ngModel)]="filtroCosecha" (selectionChange)="selecetionChangeMultiple($event,'cosecha_id')">
+			  <mat-option *ngFor="let row of cosechas" [value]="row.id">{{row.descripcion}}</mat-option>
+			</mat-select>
+		</mat-form-field>
 
         <mat-form-field appearance="legacy" >
           <mat-label>Producto</mat-label>
@@ -59,8 +66,10 @@
 
         <mat-form-field appearance="legacy" >
             <mat-label>Estado</mat-label>
-            <mat-select multiple [(ngModel)]="dataSource.filtros.estado_id" (selectionChange)="dataSource.refreshData()">
-                <mat-option *ngFor="let row of estados" [value]="row.id">{{row.nombre}}</mat-option>
+            <mat-select multiple [(ngModel)]="filtroEstado" (selectionChange)="selecetionChangeMultiple($event,'estado_id')">
+                <mat-option value="1">Activas</mat-option>
+                <mat-option value="3">Cerrada</mat-option>
+                <mat-option value="5">Eliminadas</mat-option>
             </mat-select>
         </mat-form-field>
 

@@ -37,7 +37,7 @@
     public filtroProducto      : string | null = '';
     public filtroPuerto        : string | null = '';
     public filtroFormaPago     : string | null = '';
-    //public filtroCosecha       : string | null = '';
+    //public filtroCosecha     : string | null = '';
     public filtroEmpresa       : string | null = '';
     
     constructor(
@@ -345,6 +345,7 @@
       this.filtroProducto       = '';
       this.filtroPuerto         = '';
       this.filtroFormaPago      = '';
+      //this.filtroCosecha        = '';
       this.filtroEmpresa        = null;
       this.actualizarDatos();
     }  

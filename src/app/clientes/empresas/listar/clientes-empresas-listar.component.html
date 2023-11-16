@@ -16,13 +16,13 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="legacy" *ngIf="this.rol_usuarioLogueado != 4">
+        <!--<mat-form-field appearance="legacy" *ngIf="this.rol_usuarioLogueado != 4">
             <mat-label>Usuario asociado</mat-label>
             <mat-select [(ngModel)]="dataSource.filtros.usuario_comercial_id" (selectionChange)="dataSource.refreshData()"> 
                 <mat-option value="">TODOS</mat-option>
                 <mat-option *ngFor="let row of usuarios" [value]="row.id">{{row.nombre}}</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field>-->
 
         <mat-form-field appearance="legacy">
             <mat-label>Estado</mat-label>
