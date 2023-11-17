@@ -421,6 +421,8 @@ export class IndicadorVendedoresComponent extends ListadoComponent implements On
 
   public dibujarBarras (){
     let chart: any;
+    // Ordenar data_montos_usd de forma descendente según el valor de 'x'
+    this.data_montos_usd.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_usd.map(item => ({
       label: item.y,  // Usamos el valor 'y' como etiqueta
       y: item.x  // Usamos el valor 'x' como valor
@@ -445,6 +447,7 @@ export class IndicadorVendedoresComponent extends ListadoComponent implements On
 
   public dibujarBarrasComisiones (){
     let chart: any;
+    this.data_montos_comis_usd.sort((a, b) => a.x - b.x);
     const dataPoints = this.data_montos_comis_usd.map(item => ({
       label:  item.y,  // Usamos el valor 'y' como etiqueta
       y:  item.x  // Usamos el valor 'x' como valor
@@ -472,6 +475,7 @@ export class IndicadorVendedoresComponent extends ListadoComponent implements On
 
   public dibujarBarrasARS (){
     let chart: any;
+    this.data_montos_ars.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_ars.map(item => ({
       label: item.y,  // Usamos el valor 'y' como etiqueta
       y: item.x  // Usamos el valor 'x' como valor
@@ -496,6 +500,7 @@ export class IndicadorVendedoresComponent extends ListadoComponent implements On
 
   public dibujarBarrasComisionesARS (){
     let chart: any;
+    this.data_montos_comis_ars.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_comis_ars.map(item => ({
       label:  item.y,  // Usamos el valor 'y' como etiqueta
       y:  item.x  // Usamos el valor 'x' como valor

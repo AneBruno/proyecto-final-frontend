@@ -640,6 +640,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
 
   public dibujarBarras (){
     let chart: any;
+    this.data_montos_usd.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_usd.map(item => ({
       label: item.y,  // Usamos el valor 'y' como etiqueta
       y: item.x  // Usamos el valor 'x' como valor
@@ -664,6 +665,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
 
   public dibujarBarrasComisiones (){
     let chart: any;
+    this.data_montos_comis_usd.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_comis_usd.map(item => ({
       label:  item.y,  // Usamos el valor 'y' como etiqueta
       y:  item.x  // Usamos el valor 'x' como valor
@@ -691,6 +693,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
 
   public dibujarBarrasARS (){
     let chart: any;
+    this.data_montos_ars.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_ars.map(item => ({
       label: item.y,  // Usamos el valor 'y' como etiqueta
       y: item.x  // Usamos el valor 'x' como valor
@@ -715,6 +718,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
 
   public dibujarBarrasComisionesARS (){
     let chart: any;
+    this.data_montos_comis_ars.sort((a, b) => a.x - b.x); 
     const dataPoints = this.data_montos_comis_ars.map(item => ({
       label:  item.y,  // Usamos el valor 'y' como etiqueta
       y:  item.x  // Usamos el valor 'x' como valor
