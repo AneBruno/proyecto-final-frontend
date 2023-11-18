@@ -1,0 +1,25 @@
+service: proyecto-final-angular
+
+plugins:
+  - serverless-lift
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+
+package:
+  include:
+   - dist/**
+  exclude:
+   - src/**
+   - node_modules/**
+   - e2e/**
+   - coverage/**
+   - '!src/assets/**'
+
+constructs:
+  web:
+    type: single-page-app
+    path: dist/app
+
