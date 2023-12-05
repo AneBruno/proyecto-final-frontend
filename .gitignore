@@ -49,3 +49,4 @@ src/environments/*.ts
 !src/environments/*.example.ts
 
 .serverless/
+aws/
