@@ -193,7 +193,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
   }
 
   public onClearFilters() {
-    this.filtroPeriodo       = '%Y-%m';
+    this.filtroPeriodo       = '%Y';
     this.filtroProducto      = null;
     this.filtroPuerto         = null;
     this.filtroFormaPago      = null;
