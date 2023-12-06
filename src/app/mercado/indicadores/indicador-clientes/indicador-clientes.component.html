@@ -28,12 +28,12 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="legacy" >
+        <!--<mat-form-field appearance="legacy" >
             <mat-label>Cosecha</mat-label>
             <mat-select [(ngModel)]="filtroCosecha" (selectionChange)="onFiltroCosechaChange($event)">
               <mat-option *ngFor="let row of cosechas" [value]="row.id">{{row.descripcion}}</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field>-->
         
         <mat-form-field appearance="legacy" >
             <mat-label>Forma de pago</mat-label>
@@ -87,17 +87,17 @@
         </div>-->
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_usd.length>0 && this.filtroPeriodo == '%Y'">
             <canvasjs-chart [options]="chartOptions4" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
-        </div>  
-        <br>
+        </div> 
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_comis_usd.length>0 && this.filtroPeriodo == '%Y'">
+            <br>
             <canvasjs-chart [options]="chartOptions5" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
         </div>  
-        <br>
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_ars.length>0 && this.filtroPeriodo == '%Y'">
+            <br>
             <canvasjs-chart [options]="chartOptions6" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
         </div>  
-        <br>
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_comis_ars.length>0 && this.filtroPeriodo == '%Y'">
+            <br>
             <canvasjs-chart [options]="chartOptions7" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
         </div>  
     </contenido>

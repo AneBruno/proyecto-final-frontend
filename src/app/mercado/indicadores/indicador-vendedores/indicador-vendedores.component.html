@@ -83,14 +83,15 @@
         </div>  
         <br>
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_comis_usd.length>0 && this.filtroPeriodo == '%Y'">
+            <br>
             <canvasjs-chart [options]="chartOptions5" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
-        </div>  
-        <br>
+        </div> 
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_ars.length>0 && this.filtroPeriodo == '%Y'">
+            <br>
             <canvasjs-chart [options]="chartOptions6" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
-        </div>  
-        <br>
+        </div>
         <div *ngIf="this.dataSource.currentData.length >0 && this.data_montos_comis_ars.length>0 && this.filtroPeriodo == '%Y'">
+            <br>
             <canvasjs-chart [options]="chartOptions7" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
         </div>  
     </contenido>

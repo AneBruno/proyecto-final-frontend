@@ -249,6 +249,7 @@ export class IndicadorClientesComponent extends ListadoComponent implements OnIn
   }
 
   public exportToXLSX(): void {
+    this.actualizarDatos();
     // Crear una hoja de cálculo de datos
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.currentData);
   
