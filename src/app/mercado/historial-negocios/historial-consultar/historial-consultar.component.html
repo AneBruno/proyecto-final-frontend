@@ -28,10 +28,7 @@
                     <input formControlName="volumen_posicion" matInput readonly />
                     </mat-form-field>
                 
-                <mat-form-field appearance="standard" fxLayoutAlign="stretch start">
-                    <mat-label>Observaciones:</mat-label>
-                    <input formControlName="observaciones_posicion" matInput readonly />
-                </mat-form-field>
+                
             </div>
 
             <div fxLayout="column" fxFlex.lg="50" fxFlex.xs="100">
@@ -56,9 +53,14 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxLayoutAlign="stretch start">
+                    <mat-label>Observaciones:</mat-label>
+                    <input formControlName="observaciones_posicion" matInput readonly />
+                </mat-form-field>
+
+                <!--<mat-form-field appearance="standard" fxLayoutAlign="stretch start">
                     <mat-label>Cargada por:</mat-label>
                     <input formControlName="usuario_carga_posicion" matInput readonly />
-                </mat-form-field>
+                </mat-form-field>-->
    
             </div>
         </div>
@@ -87,10 +89,7 @@
                     <input formControlName="volumen" matInput readonly />
                 </mat-form-field>     
                 
-                <mat-form-field appearance="standard" fxLayoutAlign="stretch start">
-                    <mat-label>Observaciones:</mat-label>
-                    <input formControlName="observaciones_orden" matInput readonly />
-                </mat-form-field>
+                
 
             </div>
             <div fxLayout="column" fxFlex=33 fxFlex.xs="50">
@@ -110,10 +109,15 @@
                     <input formControlName="forma_pago_orden" matInput readonly />
                 </mat-form-field>
 
-                <mat-form-field appearance="standard" fxLayoutAlign="stretch start">
+                <!--<mat-form-field appearance="standard" fxLayoutAlign="stretch start">
                     <mat-label>Cargada por:</mat-label>
                     <input formControlName="usuario_carga_orden" matInput readonly />
-                </mat-form-field>                  
+                </mat-form-field> -->  
+                
+                <mat-form-field appearance="standard" fxLayoutAlign="stretch start">
+                    <mat-label>Observaciones:</mat-label>
+                    <input formControlName="observaciones_orden" matInput readonly />
+                </mat-form-field>
             </div>
         </div>
         <p class="subtitulo">Datos de cierre</p>

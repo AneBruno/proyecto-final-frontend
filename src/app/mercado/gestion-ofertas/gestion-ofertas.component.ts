@@ -49,7 +49,7 @@ export class GestionOfertasComponent extends ListadoComponent implements OnInit 
             forma_pago_posicion: [''],
             empresa_posicion: [''],
             cosecha_posicion: [''],
-            usuario_carga_posicion: [''],
+            //usuario_carga_posicion: [''],
             volumen_posicion: ['']
         });
     }
@@ -166,7 +166,7 @@ export class GestionOfertasComponent extends ListadoComponent implements OnInit 
             forma_pago_posicion: this.posicion.forma_pago,
             cosecha_posicion : this.posicion.cosecha.descripcion,
             volumen_posicion: this.posicion.volumen,
-            usuario_carga_posicion: this.usuarios.find((usuario: any) => usuario.id == this.posicion.usuario_carga_id).nombreCompleto
+            //usuario_carga_posicion: this.usuarios.find((usuario: any) => usuario.id == this.posicion.usuario_carga_id).nombre + ' '+ this.usuarios.find((usuario: any) => usuario.id == this.posicion.usuario_carga_id).apellido
 
 
         });
