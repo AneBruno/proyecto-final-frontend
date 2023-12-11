@@ -58,6 +58,8 @@ export class UsuariosEditarComponent extends FormBaseComponent implements OnInit
 
     public actualizarDatos  : any;
 
+    public rol_usuario : any;
+
 
     constructor(
         private authService : AuthService,
@@ -82,6 +84,7 @@ export class UsuariosEditarComponent extends FormBaseComponent implements OnInit
 
         if (this.id) {
             this.getUserById(this.id).subscribe(user => {
+                this.rol_usuario = user.rol_id;
                 this.setUser(user);
             });
         }

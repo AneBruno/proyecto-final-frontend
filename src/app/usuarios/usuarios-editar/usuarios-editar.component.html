@@ -39,7 +39,7 @@
                 <mat-error *ngIf="error('rol_id')">{{error('rol_id')}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" required>
+            <mat-form-field *ngIf="this.rol_usuario != 1 && this.rol_usuario!=3" appearance="fill" required>
                 <mat-label>Empresa para la que opera</mat-label>
                 <input formControlName="empresa_registro" matInput />
                 <mat-error *ngIf="error('empresa_registro')">{{error('empresa_registro')}}</mat-error>
